@@ -13,38 +13,25 @@ class Program
                 .Build();
         string connString = config.GetConnectionString("DefaultConnection");
         IDbConnection conn = new MySqlConnection(connString);
-
-        //var repo = new DapperDepartmentRepository(conn);
-
-        //var depts = repo.GetAllDepartments();
-
-        //foreach (var dept in depts)
-        //{
-        //    Console.WriteLine($"{dept.DepartmentID} {dept.Name}");
-        //}
-
-        //Console.WriteLine();
-        //Console.WriteLine("Enter a new department name");
-
-        //var newDept = Console.ReadLine();
-
-        //repo.InsertDepartment(newDept);
-
-        //Console.WriteLine();
-
-        //depts = repo.GetAllDepartments();
-
-        //foreach (var dept in depts)
-        //{
-        //    Console.WriteLine($"{dept.DepartmentID} {dept.Name}");
-        //}
-
+       
         var prodRepo = new DapperProductRepository(conn);
         var products = prodRepo.GetAllProducts();
-        Console.WriteLine("Would you like to Read, Update, or Delete?\n(Type 'read', 'update', or 'delete)");
+        Console.WriteLine("Would you like to Create, Read, Update, or Delete?\n(Type 'create', 'read', 'update', or 'delete)");
         var response = Console.ReadLine();
         switch (response.ToLower())
         {
+            case "create":
+                Console.WriteLine("What is the new product name?");
+                var prodName = Console.ReadLine();
+
+                Console.WriteLine("What is the new product's price?");
+                var prodPrice = double.Parse(Console.ReadLine());
+
+                Console.WriteLine("What is the Category ID?");
+                var prodCat = Console.ReadLine();
+
+                prodRepo.CreateProduct(prodName, prodPrice, int.Parse(prodCat));
+                break;
             case "read":
 
                 foreach (var prod in products)
@@ -86,32 +73,6 @@ class Program
                 }
                 break;
         }
-
-
-
-
-
-        //products = prodRepo.GetAllProducts();
-
-
-
-        //Console.WriteLine("What is the new product name?");
-        //var prodName = Console.ReadLine();
-
-        //Console.WriteLine("What is the new product's price?");
-        //var prodPrice = double.Parse(Console.ReadLine());
-
-        //Console.WriteLine("What is the Category ID?");
-        //var prodCat = Console.ReadLine();
-
-        //prodRepo.CreateProduct(prodName, prodPrice, int.Parse(prodCat));
-
-        //products = prodRepo.GetAllProducts();
-
-        //foreach (var prod in products)
-        //{
-        //    Console.WriteLine($"{prod.ProductID} {prod.Name} {prod.Price}");
-        //}
 
     }
 }
