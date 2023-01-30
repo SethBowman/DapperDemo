@@ -40,13 +40,60 @@ class Program
         //}
 
         var prodRepo = new DapperProductRepository(conn);
-
         var products = prodRepo.GetAllProducts();
-
-        foreach (var prod in products)
+        Console.WriteLine("Would you like to Read, Update, or Delete?\n(Type 'read', 'update', or 'delete)");
+        var response = Console.ReadLine();
+        switch (response.ToLower())
         {
-            Console.WriteLine($"{prod.ProductID} {prod.Name} {prod.Price}");
+            case "read":
+
+                foreach (var prod in products)
+                {
+                    Console.WriteLine($"{prod.ProductID} {prod.Name} {prod.Price}");
+                }
+                break;
+
+            case "update":
+                foreach (var prod in products)
+                {
+                    Console.WriteLine($"{prod.ProductID} {prod.Name} {prod.Price}");
+                }
+                Console.WriteLine("Please enter a Product ID to update");
+                var prodID = int.Parse(Console.ReadLine());
+
+                Console.WriteLine("Please enter the updated name");
+                var newName = Console.ReadLine();
+
+                prodRepo.UpdateProduct(prodID, newName);
+
+                products = prodRepo.GetAllProducts();
+                break;
+            case "delete":
+                foreach (var prod in products)
+                {
+                    Console.WriteLine($"{prod.ProductID} {prod.Name} {prod.Price}");
+
+                    Console.WriteLine("Enter the Product ID you want to delete");
+                    prodID = int.Parse(Console.ReadLine());
+
+                    prodRepo.DeleteProduct(prodID);
+                }
+                break;
+            default:
+                foreach (var prod in products)
+                {
+                    Console.WriteLine($"{prod.ProductID} {prod.Name} {prod.Price}");
+                }
+                break;
         }
+
+
+
+
+
+        //products = prodRepo.GetAllProducts();
+
+
 
         //Console.WriteLine("What is the new product name?");
         //var prodName = Console.ReadLine();
@@ -59,39 +106,13 @@ class Program
 
         //prodRepo.CreateProduct(prodName, prodPrice, int.Parse(prodCat));
 
-        products = prodRepo.GetAllProducts();
+        //products = prodRepo.GetAllProducts();
 
-        foreach (var prod in products)
-        {
-            Console.WriteLine($"{prod.ProductID} {prod.Name} {prod.Price}");
-        }
+        //foreach (var prod in products)
+        //{
+        //    Console.WriteLine($"{prod.ProductID} {prod.Name} {prod.Price}");
+        //}
 
-        Console.WriteLine("Please enter a Product ID to update");
-        var prodID = int.Parse(Console.ReadLine());
-
-        Console.WriteLine("Please enter the updated name");
-        var newName = Console.ReadLine();
-
-        prodRepo.UpdateProduct(prodID, newName);
-
-        products = prodRepo.GetAllProducts();
-
-        foreach (var prod in products)
-        {
-            Console.WriteLine($"{prod.ProductID} {prod.Name} {prod.Price}");
-        }
-
-        Console.WriteLine("Enter the Product ID you want to delete");
-        prodID = int.Parse(Console.ReadLine());
-
-        prodRepo.DeleteProduct(prodID);
-
-        products = prodRepo.GetAllProducts();
-
-        foreach (var prod in products)
-        {
-            Console.WriteLine($"{prod.ProductID} {prod.Name} {prod.Price}");
-        }
     }
 }
 
